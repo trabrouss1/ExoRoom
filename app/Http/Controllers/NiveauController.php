@@ -14,9 +14,10 @@ class NiveauController extends Controller
             $libelleNiveau = $request->libelle;
             $serie         = $request->serie;
 
-            if($libelleNiveau == null)
+            if($libelleNiveau == null){
                 Toastr::error('Rensiegner le libelle', 'Libelle non saisser');
                 return redirect()->back();
+            }
 
             $niveau = new Niveau;
             $niveau->libelle = $libelleNiveau;

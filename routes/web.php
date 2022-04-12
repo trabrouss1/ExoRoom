@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommuneController;
+use App\Http\Controllers\EleveController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\MainController;
@@ -39,8 +40,10 @@ Route::get('/', function () {
     Route::match(['get', 'post'], '/modifier-communes-{commune}', [CommuneController::class, 'modifier'])->name('modifierCommune');
 //  ----------------------------------- Commune ------------------------------------------- //
 
-
-
+//  ----------------------------------- Eleve ------------------------------------------- //
+    Route::match(['get', 'post'], '/ajouter-eleve', [EleveController::class, 'index'])->name('eleveAjoute');
+    Route::match(['get', 'post'], '/liste-eleve', [EleveController::class, 'liste'])->name('listeEleve');
+//  ----------------------------------- Eleve ------------------------------------------- //
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
