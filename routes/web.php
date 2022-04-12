@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\MainController;
@@ -31,6 +32,12 @@ Route::get('/', function () {
     Route::match(['post', 'get'], '/liste-niveau-{niveau}', [NiveauController::class, 'modifier'])->name('modifierNiveau');
     Route::match(['post', 'get'], '/supprimer-niveau-{niveau}', [NiveauController::class, 'supprimer'])->name('supprimerNiveau');
 //  ----------------------------------- Niveau ------------------------------------------- //
+
+//  ----------------------------------- Commune ------------------------------------------- //
+    Route::match(['get', 'post'], '/liste-des-communes', [CommuneController::class, 'index'])->name('listeCommune');
+    Route::match(['get', 'post'], '/ajoute-communes', [CommuneController::class, 'ajouter'])->name('ajouterCommune');
+    Route::match(['get', 'post'], '/modifier-communes-{commune}', [CommuneController::class, 'modifier'])->name('modifierCommune');
+//  ----------------------------------- Commune ------------------------------------------- //
 
 
 

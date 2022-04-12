@@ -86,8 +86,8 @@
                         <li class="submenu"> <a href="#"><i class="fas fa-key"></i> <span> Communes </span> <span
                                     class="menu-arrow"></span></a>
                             <ul class="submenu_class" style="display: none;">
-                                <li><a href=""> Ajouter </a></li>
-                                <li><a href=""> Liste </a></li>
+                                <li><a href="{{ route('ajouterCommune') }}"> Ajouter </a></li>
+                                <li><a href="{{ route('listeCommune') }}"> Liste </a></li>
                             </ul>
                         </li>
                         <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Élèves </span> <span
