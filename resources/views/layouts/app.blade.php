@@ -47,9 +47,13 @@
                                 <h6>{{ Auth::user()->name }}</h6>
                                 <p class="mb-0 text-muted">Administrator</p>
                             </div>
-                        </div> <a class="dropdown-item" href="profile.html">My Profile</a> <a class="dropdown-item"
-                            href="settings.html">Account Settings</a> <a class="dropdown-item"
-                            href="{{ route('logout') }}">Logout</a>
+                        </div><a class="dropdown-item" href="profile.html">My Profile</a> <a class="dropdown-item"
+                            href="settings.html">Account Settings</a>
+                         <a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit()">Logout
+                        </a>
+                        <form id='logout-form' method="POST" action='{{ route('logout') }}'>
+                            @csrf
+                        </form>
                     </div>
                 </li>
             </ul>
@@ -70,22 +74,8 @@
                         <li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Niveaux </span> <span
                                     class="menu-arrow"></span></a>
                             <ul class="submenu_class" style="display: none;">
-                                <li><a href="{{ route('ajouterNiveau') }}"> Ajouter </a></li>
-                                <li><a href="edit-booking.html"> Liste </a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu"> <a href="#"><i class="fas fa-key"></i> <span> Communes </span> <span
-                                    class="menu-arrow"></span></a>
-                            <ul class="submenu_class" style="display: none;">
-                                <li><a href="all-customer.html"> Liste </a></li>
-                                <li><a href="edit-customer.html"> Ajouter </a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Élèves </span> <span
-                                    class="menu-arrow"></span></a>
-                            <ul class="submenu_class" style="display: none;">
-                                <li><a href="add-room.html"> Ajouter </a></li>
-                                <li><a href="all-rooms.html">Liste</a></li>
+                                <li><a href="{{ route('niveau.create') }}"> Ajouter </a></li>
+                                <li><a href="{{ route('niveau.index') }}"> Liste </a></li>
                             </ul>
                         </li>
                         @yield('sidebar')
@@ -315,7 +305,8 @@
     </div>
     @yield('content')
     <script data-cfasync="false" src={{ asset("../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js")
-        }}></script>
+        }}>
+    </script>
     <script src={{ asset("assets/js/jquery-3.5.1.min.js") }}></script>
     <script src={{ asset("assets/js/popper.min.js") }}></script>
     <script src={{ asset("assets/js/bootstrap.min.js") }}></script>

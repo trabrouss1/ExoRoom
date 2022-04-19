@@ -1,39 +1,53 @@
 @extends('layouts.base')
 
-@section('sidebar')
-@endsection
-
 @section('content')
-<div class="content container-fluid">
-    <div class="page-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <h1 class="mt-5 page-title">Ajouter un niveau</h1>
+    <div class="mt-5 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Liste des niveaux</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Libelle</th>
+                                <th>Série</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        @forelse ($niveaux as $niveau)
+                            <tbody>
+                                <tr>
+                                    <td>{{ $loop->index }}</td>
+                                    <td>{{ $niveau->libelle }}</td>
+                                    <td>{{ $niveau->serie }}</td>
+                                    <td>
+                                        <a class='btn btn-primary' href="{{ route('niveau.create') }}" title="Ajouter"> 
+                                            <i
+                                                class="fas fa-save">
+                                            </i> 
+                                        </a>
+                                        <a href="{{ route('niveau.destroy', $niveau) }}" class='btn btn-danger' title="Supprimer"> 
+                                            <i
+                                                class="fas fa-trash">
+                                            </i> 
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        @empty
+                            <tbody>
+                                <tr>
+                                    <td colspan="4">Aucun niveau</td>
+                                </tr>
+                            </tbody>
+                        @endforelse
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-        {!! Toastr::message() !!}
-    <div class="row">
-        <div class="col-lg-12">
-            <form action="" method="POST" >
-                @csrf
-                <div class="row formtype">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Libellé</label>
-                            <input class="form-control" name="libelle" type="text" placeholder="Saississez le libelle du niveau" autocomplete="" >
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Série</label>
-                            <input class="form-control"name="serie" type="text" placeholder="Saississez la serie du niveau" autocomplete="">
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary buttonedit1">Enregister</button>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
+

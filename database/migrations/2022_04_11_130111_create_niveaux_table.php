@@ -17,11 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('libelle');
             $table->string('serie')->nullable();
-            $table->boolean('isDeleted')->default(false);
-
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
-            $table->dateTime('deleted_at')->nullable();
+            $table->softDeletes();
         });
     }
 
