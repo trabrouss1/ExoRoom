@@ -28,7 +28,6 @@ class NiveauController extends Controller
         return view('pages.niveaux.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      * @param  \Illuminate\Http\Request  $request
@@ -47,17 +46,43 @@ class NiveauController extends Controller
         
         return redirect()->route('niveau.index');
     }
+    
+    /**
+     * Show the form for showing the specified resource.
+     * @param  \App\Models\Niveau  $niveau
+     * @return \Illuminate\Http\Response
+     **/
+
+    public function show(Niveau $niveau){
+        return view('pages.niveaux.edit', compact('niveau'));
+    }
+
+
+    /**
+     * Display the specified resource.
+     * @param  \App\Models\Niveau  $niveau
+     * @return \Illuminate\Http\Response
+     **/
 
     public function update(Request $request, Niveau $niveau)
     {
-        $niveau->update($request->all());
-        return view('pages.niveaux.modifier', compact('niveau'));
+        $niveau->update($request->except('_token'));
+        Toastr::success('Niveau modifié avec succès');
+        return redirect()->route('niveau.index');
     }
 
-    public function delete(Request $request, Niveau $niveau)
+
+    /**
+     * Show the form for delete the specified resource.
+     * @param  \App\Models\Niveau  $niveau
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     **/
+
+    public function destroy(Request $request, Niveau $niveau)
     {
         $niveau->delete();
         Toastr::success("Le niveau <strong>$niveau->libelle</strong> a été supprimer avec succès");
-        return view('pages.niveaux.index');
+        return back();
     }
 }

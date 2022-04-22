@@ -14,6 +14,7 @@
     <link rel="stylehseet" href="https://cdn.oesmith.co.uk/morris-0.5.1.css">
     <link rel="stylesheet" href={{ asset("assets/plugins/morris/morris.css") }}>
     <link rel="stylesheet" href={{ asset("assets/css/style.css") }}>
+    <meta  name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 {{-- message toastr --}}
@@ -127,6 +128,7 @@
     <script src={{ asset("assets/plugins/datatables/datatables.min.js") }}></script>
     <script src={{ asset("assets/js/chart.morris.js") }}></script>
     <script src={{ asset("assets/js/script.js") }}></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('scripts')
 </body>
 

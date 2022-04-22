@@ -12,7 +12,8 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <form action="" method="POST">
+            <form action="{{ route('niveau.update', $niveau) }}" method="POST">
+                @method('PUT')
                 @csrf
                 <div class="row formtype">
                     <div class="col-md-4">

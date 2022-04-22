@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/login');
 
-Route::resource('niveau', NiveauController::class);
+Route::resource('niveau', NiveauController::class)->except(['destroy']);
+Route::post('/niveau/delete/{niveau}', [NiveauController::class, 'destroy'])->name('niveau.delete');
 Route::resource('commune', CommuneController::class);
 Route::resource('eleve', EleveController::class);
 
