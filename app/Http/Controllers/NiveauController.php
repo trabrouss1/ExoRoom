@@ -4,63 +4,85 @@ namespace App\Http\Controllers;
 
 use App\Models\Niveau;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Brian2694\Toastr\Facades\Toastr;
 
 class NiveauController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Display a listing of the resource.
+     * @return \Illuminate\Http\Response
+     **/
+    public function index()
     {
-        if($request->isMethod('post')){
-            $libelleNiveau = $request->libelle;
-            $serie         = $request->serie;
-
-            if($libelleNiveau == null){
-                Toastr::error('Rensiegner le libelle', 'Libelle non saisser');
-                return redirect()->back();
-            }
-
-            $niveau = new Niveau;
-            $niveau->libelle = $libelleNiveau;
-            $niveau->serie = $serie;
-            $niveau->created_at =( new \DateTime(now()))->format('d/m/Y');
-            $niveau->save();
-            $label = isset($serie) ? $serie : '';
-            Toastr::success("Le niveau <strong>$libelleNiveau $label</strong> a été enregister avec succès");
-            return to_route('listeNiveau');
-        }
-        return view('pages.niveaux.index');
+        $niveaux = Niveau::orderByDesc('created_at')->get();
+        return view('pages.niveaux.index', compact('niveaux'));
     }
 
-    public function liste()
-    {
-        $niveaux = Niveau::where('isDeleted', false)->get();
-        return view('pages.niveaux.liste', compact('niveaux'));
+    /**
+     * Show the form for creating a new resource.
+     * @return \Illuminate\Http\Response
+     **/
+
+    public function create(){
+        return view('pages.niveaux.create');
     }
 
-    public function modifier(Request $request, Niveau $niveau)
-    {
-        $niveau = Niveau::find($niveau->id);
-        if($request->isMethod('POST')){
-            $libelleNiveau      = $request->libelle;
-            $serie              = $request->serie;
-            $niveau->libelle    = $libelleNiveau;
-            $niveau->serie      = $serie;
-            $niveau->updated_at = ( new \DateTime(now()))->format('d/m/Y');
-            $niveau->save();
-            $label = isset($serie) ? $serie : '';
-            Toastr::success("Le niveau a <strong>$libelleNiveau $label</strong> été modifier avec succès");
-            return to_route('listeNiveau');
-        }
-        return view('pages.niveaux.modifier', compact('niveau'));
+    /**
+     * Store a newly created resource in storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     **/
+
+    public function store(Request $request){
+
+        $request->validate([
+            'libelle' => ['required', Rule::unique('niveaux', 'libelle'), 'max:255'],
+            'serie' => ['nullable', 'string','max:255'],
+        ]);
+
+        Niveau::create($request->except('_token'));
+        Toastr::success('Niveau créé avec succès', 'Succès');
+        
+        return redirect()->route('niveau.index');
+    }
+    
+    /**
+     * Show the form for showing the specified resource.
+     * @param  \App\Models\Niveau  $niveau
+     * @return \Illuminate\Http\Response
+     **/
+
+    public function show(Niveau $niveau){
+        return view('pages.niveaux.edit', compact('niveau'));
     }
 
-    public function supprimer(Request $request, Niveau $niveau)
-    {
-        dd($request);
-        if($request->isMethod('post')){
-            $niveauId = $request->input('SupprimerNiveau');
-        }
 
-        // return to_route('listeNiveau');
+    /**
+     * Display the specified resource.
+     * @param  \App\Models\Niveau  $niveau
+     * @return \Illuminate\Http\Response
+     **/
+
+    public function update(Request $request, Niveau $niveau)
+    {
+        $niveau->update($request->except('_token'));
+        Toastr::success('Niveau modifié avec succès');
+        return redirect()->route('niveau.index');
+    }
+
+
+    /**
+     * Show the form for delete the specified resource.
+     * @param  \App\Models\Niveau  $niveau
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     **/
+
+    public function destroy(Request $request, Niveau $niveau)
+    {
+        $niveau->delete();
+        Toastr::success("Le niveau <strong>$niveau->libelle</strong> a été supprimer avec succès");
+        return back();
     }
 }

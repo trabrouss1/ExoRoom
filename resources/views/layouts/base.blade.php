@@ -14,6 +14,7 @@
     <link rel="stylehseet" href="https://cdn.oesmith.co.uk/morris-0.5.1.css">
     <link rel="stylesheet" href={{ asset("assets/plugins/morris/morris.css") }}>
     <link rel="stylesheet" href={{ asset("assets/css/style.css") }}>
+    <meta  name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 {{-- message toastr --}}
@@ -50,9 +51,12 @@
                                 <h6><strong>{{ Auth::user()->name }}</strong></h6>
                                 <p class="mb-0 text-muted">Administrator</p>
                             </div>
-                        </div> <a class="dropdown-item" href="#">My Profile</a> <a class="dropdown-item"
-                            href="#">Account Settings</a> <a class="dropdown-item"
-                            href="{{ route('logout') }}">Logout</a>
+                        </div> 
+                        <a class="dropdown-item" href="#" onclick="document.getElementById('logout-form').submit()">Logout
+                        </a>
+                        <form id='logout-form' method="POST" action='{{ route('logout') }}'>
+                            @csrf
+                        </form>
                     </div>
                 </li>
             </ul>
@@ -79,22 +83,22 @@
                         <li class="submenu"> <a href="#"><i class="fas fa-suitcase"></i> <span> Niveaux </span> <span
                                     class="menu-arrow"></span></a>
                             <ul class="submenu_class" style="display: none;">
-                                <li><a href="{{ route('ajouterNiveau') }}"> Ajouter </a></li>
-                                <li><a href="{{ route('listeNiveau') }}"> Liste </a></li>
+                                <li><a href="{{ route('niveau.index') }}"> Liste </a></li>
+                                <li><a href="{{ route('niveau.create') }}"> Ajouter </a></li>
                             </ul>
                         </li>
                         <li class="submenu"> <a href="#"><i class="fas fa-key"></i> <span> Communes </span> <span
                                     class="menu-arrow"></span></a>
                             <ul class="submenu_class" style="display: none;">
-                                <li><a href="{{ route('ajouterCommune') }}"> Ajouter </a></li>
-                                <li><a href="{{ route('listeCommune') }}"> Liste </a></li>
+                                <li><a href=""> Ajouter </a></li>
+                                <li><a href=""> Liste </a></li>
                             </ul>
                         </li>
                         <li class="submenu"> <a href="#"><i class="fas fa-user"></i> <span> Élèves </span> <span
                                     class="menu-arrow"></span></a>
                             <ul class="submenu_class" style="display: none;">
-                                <li><a href="{{ route('eleveAjoute') }}"> Ajouter </a></li>
-                                <li><a href="{{ route('listeEleve') }}">Liste</a></li>
+                                <li><a href=""> Ajouter </a></li>
+                                <li><a href="">Liste</a></li>
                             </ul>
                         </li>
                         @yield('sidebar')
@@ -124,6 +128,7 @@
     <script src={{ asset("assets/plugins/datatables/datatables.min.js") }}></script>
     <script src={{ asset("assets/js/chart.morris.js") }}></script>
     <script src={{ asset("assets/js/script.js") }}></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @yield('scripts')
 </body>
 
